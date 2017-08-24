@@ -1,0 +1,17 @@
+FROM ubuntu:xenial
+
+MAINTAINER Manuel Mendoza <manuel.mendoza@placetopay.com>
+
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt-get update \
+    && apt-get install -y nginx \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
+    && echo "daemon off;" >> /etc/nginx/nginx.conf
+
+ADD default /etc/nginx/sites-available/default
+
+EXPOSE 80
+
+CMD ["nginx"]
